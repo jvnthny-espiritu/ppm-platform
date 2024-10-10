@@ -7,19 +7,30 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import SimCardDownload from '@mui/icons-material/SimCardDownload';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
-
+import { List } from '@mui/icons-material';
+import { Forms } from '../pages/Forms';
+import EnhancedTable from '../components/PerformerDirectory';
+import { DashboardAdmin } from '../pages/DashboardAdmin';
+        
 const NAVIGATION = [
   {
     segment: 'dashboard',
     title: 'Dashboard',
     icon: <DashboardIcon />,
+    component: DashboardAdmin,
   },
   {
     segment: 'downloadableForms',
     title: 'Downloadable Forms',
     icon: <SimCardDownload />,
+    component: Forms,
   },
-
+  {
+    segment: 'performersDirectory',
+    title: 'Performers Directory',
+    icon: <List />,
+    component: EnhancedTable,
+  },
 ];
 
 const demoTheme = createTheme({
@@ -39,6 +50,12 @@ const demoTheme = createTheme({
 });
 
 function DemoPageContent({ pathname }) {
+  const currentNavItem = NAVIGATION.find(item => pathname.includes(item.segment));
+
+  const ContentComponent = currentNavItem?.component || (() => (
+    <Typography>Page not found</Typography>
+  ));
+
   return (
     <Box
       sx={{
@@ -49,7 +66,7 @@ function DemoPageContent({ pathname }) {
         textAlign: 'center',
       }}
     >
-      <Typography>Dashboard content for {pathname}</Typography>
+      <ContentComponent/>
     </Box>
   );
 }
@@ -63,8 +80,8 @@ function DashboardLayoutAccount(props) {
 
   const [session, setSession] = React.useState({
     user: {
-      name: 'Bharat Kashyap',
-      email: 'bharatkashyap@outlook.com',
+      name: 'Billymer Salamat',
+      email: 'billysalamat@gmail.com',
       image: 'https://avatars.githubusercontent.com/u/19550456',
     },
   });
@@ -74,8 +91,8 @@ function DashboardLayoutAccount(props) {
       signIn: () => {
         setSession({
           user: {
-            name: 'Bharat Kashyap',
-            email: 'bharatkashyap@outlook.com',
+            name: 'Billymer Salamat',
+            email: 'billysalamat@gmail.com',
             image: 'https://avatars.githubusercontent.com/u/19550456',
           },
         });
