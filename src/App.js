@@ -10,6 +10,9 @@ import { ProfileRoutes } from './components/ProfileRoutes';
 function App() {
   return (
     <main>
+      <br/>
+      <br/>
+      <br/>
       <nav>
         <ul>
           <li>
