@@ -1,6 +1,11 @@
-import { useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 
 export function Profile() {
     const { id } = useParams()
-    return <h1>Profile { id }</h1>
+    const obj = useOutletContext()
+    return(
+        <>
+            Profile { id } {obj.hello}
+        </>
+    )
 }

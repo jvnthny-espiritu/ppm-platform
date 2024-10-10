@@ -1,14 +1,11 @@
 import './App.css';
 import { Link, Routes, Route } from 'react-router-dom';
 import { Home } from './pages/Home';
-import { Profile } from './pages/Profile';
 import { Forms } from './pages/Forms';
 import { NotFoundPage } from './pages/NotFoundPage';
 import SignInSide from './pages/sign-in-side/SignInSide';
 import SignUp from './pages/sign-up/SignUp';
-import { NewProfile } from './components/NewProfile';
-import { ProfileLayout } from './components/ProfileLayout';
-import { ProfileList } from './components/ProfileList';
+import { ProfileRoutes } from './components/ProfileRoutes';
 
 function App() {
   return (
@@ -34,11 +31,7 @@ function App() {
       </nav>
       <Routes>
         <Route path = '/' element = {<Home/>} />
-        <Route path = '/profile' element={<ProfileLayout/>}>
-          <Route index element = {<ProfileList/>} />
-          <Route path = ':id' element = {<Profile/>} />
-          <Route path = 'new' element = {<NewProfile/>} />
-        </Route>
+        <Route path = '/profile/*' element={<ProfileRoutes/>} />
         <Route path = '/forms' element = {<Forms/>} />
         <Route path = '/sign-in' element = {<SignInSide/>} />
         <Route path = '/sign-up' element = {<SignUp/>} />
