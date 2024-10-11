@@ -4,7 +4,7 @@ import { Forms } from './pages/Forms';
 import { NotFoundPage } from './pages/NotFoundPage';
 import SignInSide from './pages/sign-in-side/SignInSide';
 import SignUp from './pages/sign-up/SignUp';
-import { ProfileRoutes } from './components/ProfileRoutes';
+import { ProfileRoutes } from './components/Profile/ProfileRoutes';
 import DashboardLayoutAccount from './components/DashboardLayoutAccount';
 
 function App() {
