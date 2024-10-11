@@ -11,10 +11,12 @@ const columns = [
   {
     field: 'id',
     headerName: 'ID',
+    width: 50,
   },
   {
     field: 'name',
     headerName: 'Name',
+    width: 200,
   },
   {
     field: 'srcode',
@@ -35,6 +37,7 @@ const columns = [
     field: 'program',
     headerName: 'Program',
     type: 'string',
+    width: 180,
   },
 ]
 
