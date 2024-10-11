@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom"
 import { Profile } from '../../pages/Profile'
 import { CreateProfile } from './CreateProfile'
 import { ViewProfile } from './ViewProfile'
-import { PerfomerLanding } from './PerformerLanding'
+import PerfomerLanding from './PerformerLanding'
 import { ProfileLayout } from './ProfileLayout'
 import { EditProfile } from "./EditProfile"
 
