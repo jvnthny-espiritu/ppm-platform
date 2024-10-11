@@ -22,32 +22,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 
-function createData(id, name, cgroup, campus, department, program) {
-  return {
-    id,
-    name,
-    cgroup,
-    campus,
-    department,
-    program,
-  };
-}
-
-const rows = [
-  createData(1, 'Salamat, Billymer', 'Performing Arts', 'Alangilan', 'CICS', 'BS Computer Science'),
-  createData(2, 'Morastel, Clair', 'Music', 'Alangilan', 'CICS', 'BS Computer Science'),
-  createData(3, 'Falic, Marc Daniel', 'Literary Arts', 'Alangilan', 'CICS', 'BS Computer Science'),
-  createData(4, 'Kalalo, Febrj Yarrah', 'Visual Arts', 'Alangilan', 'CICS', 'BS Computer Science'),
-  createData(5, 'Dalisay, Victor Manuel', 'Theater', 'Alangilan', 'CICS', 'BS Computer Science'),
-  createData(6, 'Moreno, Alain Micko', 'Dance', 'Alangilan', 'CICS', 'BS Computer Science'),
-  createData(7, 'Jalapan, John Pol', 'Performing Arts', 'Alangilan', 'CICS', 'BS Computer Science'),
-  createData(8, 'Magbojos, Jenloke', 'Music', 'Alangilan', 'CICS', 'BS Computer Science'),
-  createData(9, 'Fajardo, Dale Andrew', 'Literary Arts', 'Alangilan', 'CICS', 'BS Computer Science'),
-  createData(10, 'Cruzat, Seth Arkin', 'Visual Arts', 'Alangilan', 'CICS', 'BS Computer Science'),
-  createData(11, 'Tomongha, Princess May', 'Theater', 'Alangilan', 'CICS', 'BS Computer Science'),
-  createData(12, 'De Jesus, James Moris', 'Dance', 'Alangilan', 'CICS', 'BS Computer Science'),
-  createData(13, 'Abanilla, Drexler', 'Performing Arts', 'Alangilan', 'CICS', 'BS Computer Science'),
-];
+import { performersData as rows } from '../data/index';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
