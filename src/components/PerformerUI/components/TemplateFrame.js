@@ -50,7 +50,7 @@ function TemplateFrame({
               size="small"
               aria-label="Button here"
               component="a"
-              href="/material-ui/getting-started/templates/"
+              href="/sign-in"
               sx={{ display: 'flex' }}
             >
               <ArrowBackRoundedIcon />
