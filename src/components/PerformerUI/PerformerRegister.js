@@ -3,14 +3,13 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid2';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import AddressForm from './components/AddressForm';
-import getFormTheme from './getFormTheme';
+import SignUpForm from './components/SignUpForm';
+import getFormTheme from './theme/getFormTheme';
 import TemplateFrame from './components/TemplateFrame';
 
 export default function PerfomerLanding() {
   const [mode, setMode] = React.useState('light');
   const formTheme = createTheme(getFormTheme(mode));
-  const [activeStep, setActiveStep] = React.useState(0);
   // This code only runs on the client side, to determine the system color preference
   React.useEffect(() => {
     // Check if there is a preferred mode in localStorage
@@ -31,14 +30,6 @@ export default function PerfomerLanding() {
     setMode(newMode);
     localStorage.setItem('themeMode', newMode); // Save the selected mode to localStorage
   };
-  
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
-  };
-  const handleBack = () => {
-    setActiveStep(activeStep - 1);
-  };
-
 
   return (
     <TemplateFrame
@@ -78,7 +69,7 @@ export default function PerfomerLanding() {
             }}
           >
             <Box>
-            <AddressForm />
+            <SignUpForm />
             </Box>
             
           </Grid>

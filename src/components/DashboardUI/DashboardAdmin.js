@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
 import { BarPlot } from '@mui/x-charts/BarChart';
 import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis';
-import { awardsData, studentPerformersData } from '../data/dashboardData'; // Importing the data
+import { awardsData, studentPerformersData } from '../../data/dashboardData'; // Importing the data
 
 export function DashboardAdmin() {
   const Container = ResponsiveChartContainer;

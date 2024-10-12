@@ -1,10 +1,9 @@
 import React from 'react';
-import '../index.css';
 import Paper from '@mui/material/Paper';
 
 import { DataGrid } from '@mui/x-data-grid';
 
-import { performersData as rows } from '../data/index';
+import { performersData as rows } from '../../data/index';
 import { Box } from '@mui/material';
 
 const columns = [

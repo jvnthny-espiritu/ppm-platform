@@ -8,9 +8,9 @@ import SimCardDownload from '@mui/icons-material/SimCardDownload';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { List } from '@mui/icons-material';
-import { Forms } from '../pages/Forms';
-import EnhancedTable from '../components/PerformerDirectory';
-import { DashboardAdmin } from '../pages/DashboardAdmin';
+import { Forms } from '../../pages/Forms';
+import EnhancedTable from './PerformerDirectory';
+import { DashboardAdmin } from './DashboardAdmin';
         
 const NAVIGATION = [
   {
