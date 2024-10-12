@@ -4,6 +4,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import Grid from '@mui/material/Grid2';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import Button from '@mui/material/Button';
 import { styled } from '@mui/system';
 
 const FormGrid = styled(Grid)(() => ({
@@ -14,6 +15,9 @@ const FormGrid = styled(Grid)(() => ({
 export default function AddressForm() {
   return (
     <Grid container spacing={3}>
+      <FormGrid size={{ xs: 12 }}>
+        <h1>Sign Up Form</h1>
+      </FormGrid>
       <FormGrid size={{ xs: 12, md: 6 }}>
         <FormLabel htmlFor="first-name" required>
           First name
@@ -124,6 +128,12 @@ export default function AddressForm() {
           label="I agree to the terms and conditions."
         />
       </FormGrid>
+      <Button
+        variant="outlined"
+        size="Medium"
+      >
+        Submit
+      </Button>
     </Grid>
   );
 }

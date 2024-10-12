@@ -1,10 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
@@ -29,15 +25,11 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
 }));
 
 function TemplateFrame({
-  showCustomTheme,
-  toggleCustomTheme,
   mode,
   toggleColorMode,
   children,
 }) {
-  const handleChange = (event) => {
-    toggleCustomTheme(event.target.value === 'custom');
-  };
+
   const formTheme = createTheme(getFormTheme(mode));
 
   return (
@@ -54,40 +46,17 @@ function TemplateFrame({
               p: '8px 12px',
             }}
           >
-            <Button
-              variant="text"
-              size="small"
-              aria-label="Back to templates"
-              startIcon={<ArrowBackRoundedIcon />}
-              component="a"
-              href="/material-ui/getting-started/templates/"
-              sx={{ display: { xs: 'none', sm: 'flex' } }}
-            >
-              Back to templates
-            </Button>
             <IconButton
               size="small"
-              aria-label="Back to templates"
+              aria-label="Button here"
               component="a"
               href="/material-ui/getting-started/templates/"
-              sx={{ display: { xs: 'auto', sm: 'none' } }}
+              sx={{ display: 'flex' }}
             >
               <ArrowBackRoundedIcon />
             </IconButton>
             <Box sx={{ display: 'flex', gap: 1 }}>
-              <FormControl variant="outlined" sx={{ minWidth: 180 }}>
-                <Select
-                  size="small"
-                  labelId="theme-select-label"
-                  id="theme-select"
-                  value={showCustomTheme ? 'custom' : 'material'}
-                  onChange={handleChange}
-                  label="Design Language"
-                >
-                  <MenuItem value="custom">Custom Theme</MenuItem>
-                  <MenuItem value="material">Material Design 2</MenuItem>
-                </Select>
-              </FormControl>
+              
               <ToggleColorMode
                 data-screenshot="toggle-mode"
                 mode={mode}
