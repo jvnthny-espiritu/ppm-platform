@@ -1,78 +1,137 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid2';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import getFormTheme from './theme/getFormTheme';
-import TemplateFrame from './components/TemplateFrame';
+import Typography from '@mui/material/Typography';
+import { createTheme } from '@mui/material/styles';
+import PortraitIcon from '@mui/icons-material/Portrait';
+import SimCardDownload from '@mui/icons-material/SimCardDownload';
+import { AppProvider } from '@toolpad/core/AppProvider';
+import { DashboardLayout } from '@toolpad/core/DashboardLayout';
+import { Forms } from '../../pages/Forms';
+import PerformerProfile from './PerformerProfile';
+        
+const NAVIGATION = [
+  {
+    segment: 'dashboard',
+    title: 'My Profile',
+    icon: <PortraitIcon />,
+    component: PerformerProfile,
+  },
+  {
+    segment: 'downloadableForms',
+    title: 'Downloadable Forms',
+    icon: <SimCardDownload />,
+    component: Forms,
+  },
+];
 
-export default function PerfomerLanding() {
-  const [mode, setMode] = React.useState('light');
-  const formTheme = createTheme(getFormTheme(mode));
-  // This code only runs on the client side, to determine the system color preference
-  React.useEffect(() => {
-    // Check if there is a preferred mode in localStorage
-    const savedMode = localStorage.getItem('themeMode');
-    if (savedMode) {
-      setMode(savedMode);
-    } else {
-      // If no preference is found, it uses system preference
-      const systemPrefersDark = window.matchMedia(
-        '(prefers-color-scheme: dark)',
-      ).matches;
-      setMode(systemPrefersDark ? 'dark' : 'light');
-    }
-  }, []);
+const demoTheme = createTheme({
+  cssVariables: {
+    colorSchemeSelector: 'data-toolpad-color-scheme',
+  },
+  colorSchemes: { light: true, dark: true },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 500,
+      md: 800,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
+});
 
-  const toggleColorMode = () => {
-    const newMode = mode === 'dark' ? 'light' : 'dark';
-    setMode(newMode);
-    localStorage.setItem('themeMode', newMode); // Save the selected mode to localStorage
-  };
+function DemoPageContent({ pathname }) {
+  const currentNavItem = NAVIGATION.find(item => pathname.includes(item.segment));
+
+  const ContentComponent = currentNavItem?.component || (() => (
+    <Typography>Page not found</Typography>
+  ));
 
   return (
-    <TemplateFrame
-      mode={mode}
-      toggleColorMode={toggleColorMode}
+    <Box
+      sx={{
+        py: 4,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        textAlign: 'center',
+      }}
     >
-      <ThemeProvider theme={formTheme}>
-        <CssBaseline enableColorScheme />
-        <Grid container sx={{ height: { xs: '100%', sm: '100dvh' } }}>
-          <Grid
-            size={{ xs: 12, sm: 5, lg: 4 }}
-            sx={{
-              display: { xs: 'none', md: 'flex' },
-              flexDirection: 'column',
-              backgroundColor: 'background.paper',
-              borderRight: { sm: 'none', md: '1px solid' },
-              borderColor: { sm: 'none', md: 'divider' },
-              alignItems: 'start',
-              pt: 10,
-              px: 10,
-              gap: 4,
-            }}
-          >
-          </Grid>
-          <Grid
-            size={{ sm: 12, md: 7, lg: 8 }}
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              maxWidth: '100%',
-              width: '100%',
-              backgroundColor: { xs: 'transparent', sm: 'background.default' },
-              alignItems: 'start',
-              pt: { xs: 6, sm: 4, md: 8, lg:  6},
-              px: { xs: 3, sm: 4, md: 8, lg: 8 },
-              gap: { xs: 4, sm: 4, md: 8 },
-            }}
-          >
-            <Box>
-            </Box>
-            
-          </Grid>
-        </Grid>
-      </ThemeProvider>
-    </TemplateFrame>
+      <ContentComponent/>
+    </Box>
   );
 }
+
+DemoPageContent.propTypes = {
+  pathname: PropTypes.string.isRequired,
+};
+
+function DashboardLayoutAccount(props) {
+  const { window } = props;
+
+  const [session, setSession] = React.useState({
+    user: {
+      name: 'Billymer Salamat',
+      email: 'billysalamat@gmail.com',
+      image: 'https://avatars.githubusercontent.com/u/19550456',
+    },
+  });
+
+  const authentication = React.useMemo(() => {
+    return {
+      signIn: () => {
+        setSession({
+          user: {
+            name: 'Billymer Salamat',
+            email: 'billysalamat@gmail.com',
+            image: 'https://avatars.githubusercontent.com/u/19550456',
+          },
+        });
+      },
+      signOut: () => {
+        setSession(null);
+      },
+    };
+  }, []);
+
+  const [pathname, setPathname] = React.useState('/dashboard');
+
+  const router = React.useMemo(() => {
+    return {
+      pathname,
+      searchParams: new URLSearchParams(),
+      navigate: (path) => setPathname(String(path)),
+    };
+  }, [pathname]);
+
+  // Remove this const when copying and pasting into your project.
+  const demoWindow = window !== undefined ? window() : undefined;
+
+  return (
+    // preview-start
+    <AppProvider
+      session={session}
+      authentication={authentication}
+      navigation={NAVIGATION}
+      router={router}
+      theme={demoTheme}
+      window={demoWindow}
+    >
+      <DashboardLayout>
+        <DemoPageContent pathname={pathname} />
+      </DashboardLayout>
+    </AppProvider>
+    // preview-end
+  );
+}
+
+DashboardLayoutAccount.propTypes = {
+  /**
+   * Injected by the documentation to work in an iframe.
+   * Remove this when copying and pasting into your project.
+   */
+  window: PropTypes.func,
+};
+
+export default DashboardLayoutAccount;
