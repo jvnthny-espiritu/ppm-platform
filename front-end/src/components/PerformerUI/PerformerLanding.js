@@ -3,33 +3,25 @@ import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { createTheme } from '@mui/material/styles';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import PortraitIcon from '@mui/icons-material/Portrait';
 import SimCardDownload from '@mui/icons-material/SimCardDownload';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
-import { List } from '@mui/icons-material';
 import { Forms } from '../../pages/Forms';
-import EnhancedTable from './PerformerDirectory';
-import { DashboardAdmin } from './DashboardAdmin';
+import PerformerProfile from './PerformerProfile';
         
 const NAVIGATION = [
   {
     segment: 'dashboard',
-    title: 'Dashboard',
-    icon: <DashboardIcon />,
-    component: DashboardAdmin,
+    title: 'My Profile',
+    icon: <PortraitIcon />,
+    component: PerformerProfile,
   },
   {
     segment: 'downloadableForms',
     title: 'Downloadable Forms',
     icon: <SimCardDownload />,
     component: Forms,
-  },
-  {
-    segment: 'performersDirectory',
-    title: 'Performers Directory',
-    icon: <List />,
-    component: EnhancedTable,
   },
 ];
 
@@ -41,8 +33,8 @@ const demoTheme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
-      sm: 600,
-      md: 600,
+      sm: 500,
+      md: 800,
       lg: 1200,
       xl: 1536,
     },

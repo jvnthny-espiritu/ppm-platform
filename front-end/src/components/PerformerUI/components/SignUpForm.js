@@ -6,6 +6,10 @@ import Grid from '@mui/material/Grid2';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/system';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import { culturalgroups, campuses, departments, programs } from '../../../data/registrationValues';
+import { useState } from 'react';
 
 const FormGrid = styled(Grid)(() => ({
   display: 'flex',
@@ -13,10 +17,23 @@ const FormGrid = styled(Grid)(() => ({
 }));
 
 export default function SignUpForm() {
+  const [selectedDepartment, setSelectedDepartment] = useState(null);
+  const [filteredPrograms, setFilteredPrograms] = useState([]);
+
+  // Filter the programs based on the selected department
+  const handleDepartmentChange = (event, value) => {
+    setSelectedDepartment(value);
+    if (value) {
+      setFilteredPrograms(programs[value.label] || []); // Assuming programs is an object keyed by department names
+    } else {
+      setFilteredPrograms([]);
+    }
+  };
+
   return (
     <Grid container spacing={3}>
       <FormGrid size={{ xs: 12 }}>
-        <h1>Sign Up Form</h1>
+        <h1>Performer Registration Form</h1>
       </FormGrid>
       <FormGrid size={{ xs: 12, md: 6 }}>
         <FormLabel htmlFor="first-name" required>
@@ -57,43 +74,65 @@ export default function SignUpForm() {
           size="small"
         />
       </FormGrid>
-      <FormGrid size={{ xs: 12 }}>
+      <FormGrid size={{ xs: 12, md: 6 }}>
         <FormLabel htmlFor="cgroup" required>
           Cultural Group
         </FormLabel>
-        <OutlinedInput
+        <Autocomplete
           id="cgroup"
           name="cgroup"
           type="cgroup"
-          placeholder="Performing Arts"
           required
           size="small"
+          disablePortal
+          options={culturalgroups}
+          renderInput={(params) => <TextField {...params} />}
         />
       </FormGrid>
-      <FormGrid size={{ xs: 6 }}>
-        <FormLabel htmlFor="campus" required>
+      <FormGrid size={{ xs: 12, md: 6 }}>
+        <FormLabel htmlFor="cgroup" required>
           Campus
         </FormLabel>
-        <OutlinedInput
+        <Autocomplete
           id="campus"
           name="campus"
           type="campus"
-          placeholder="Alangilan"
           required
           size="small"
+          disablePortal
+          options={campuses}
+          renderInput={(params) => <TextField {...params} />}
         />
       </FormGrid>
-      <FormGrid size={{ xs: 6 }}>
+      <FormGrid size={{ xs: 12, md: 6 }}>
         <FormLabel htmlFor="department" required>
           Department
         </FormLabel>
-        <OutlinedInput
+        <Autocomplete
           id="department"
           name="department"
           type="department"
-          placeholder="CICS"
           required
           size="small"
+          disablePortal
+          options={departments}
+          onChange={handleDepartmentChange}
+          renderInput={(params) => <TextField {...params} />}
+        />
+      </FormGrid>
+      <FormGrid size={{ xs: 12, md: 6 }}>
+        <FormLabel htmlFor="program" required>
+          Program
+        </FormLabel>
+        <Autocomplete
+          id="program"
+          name="program"
+          type="program"
+          required
+          size="small"
+          disablePortal
+          options={filteredPrograms} // Dynamically filtered programs
+          renderInput={(params) => <TextField {...params} />}
         />
       </FormGrid>
       <FormGrid size={{ xs: 6 }}>
@@ -109,29 +148,13 @@ export default function SignUpForm() {
           size="small"
         />
       </FormGrid>
-      <FormGrid size={{ xs: 6 }}>
-        <FormLabel htmlFor="program" required>
-          Program
-        </FormLabel>
-        <OutlinedInput
-          id="program"
-          name="program"
-          type="program"
-          placeholder="BS Computer Science"
-          required
-          size="small"
-        />
-      </FormGrid>
       <FormGrid size={{ xs: 12 }}>
         <FormControlLabel
-          control={<Checkbox name="saveAddress" value="yes" />}
+          control={<Checkbox name="agreeBox" value="yes" />}
           label="I agree to the terms and conditions."
         />
       </FormGrid>
-      <Button
-        variant="outlined"
-        size="Medium"
-      >
+      <Button variant="outlined" size="Medium">
         Submit
       </Button>
     </Grid>
