@@ -121,18 +121,39 @@ export default function SignUp() {
     return isValid;
   };
 
-  const handleSubmit = (event) => {
-    if (nameError || emailError || passwordError) {
-      event.preventDefault();
-      return;
+  const handleSubmit = async (event) => {
+    event.preventDefault();  // Prevent the default form submission behavior
+
+    // Validate input
+    if (!validateInputs()) return;
+
+    const data = {
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      password: document.getElementById('password').value,
+    };
+
+    try {
+      const response = await fetch('http://localhost:4000/api/sign-up', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('User created successfully:', result);
+        // Redirect to login page or show success message
+      } else {
+        const error = await response.json();
+        console.error('Error creating user:', error.message);
+        // Show error message on the UI
+      }
+    } catch (error) {
+      console.error('Error:', error);
     }
-    const data = new FormData(event.currentTarget);
-    console.log({
-      name: data.get('name'),
-      lastName: data.get('lastName'),
-      email: data.get('email'),
-      password: data.get('password'),
-    });
   };
 
   return (
@@ -156,7 +177,7 @@ export default function SignUp() {
             </Typography>
             <Box
               component="form"
-              onSubmit={handleSubmit}
+              onSubmit={handleSubmit}  // Calls the handleSubmit function
               sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
             >
               <FormControl>

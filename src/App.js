@@ -16,7 +16,6 @@ function App() {
         <Route path = '/admin' element = {<DashboardLayoutAccount/>} />
         <Route path = '/profile/*' element={<ProfileRoutes/>} />
         <Route path = '/forms' element = {<Forms/>} />
-        <Route path = '/sign-in' element = {<SignInSide/>} />
         <Route path = '/sign-up' element = {<SignUp/>} />
         <Route path = '/performer/register' element = {<PerformerRegister/>} />
         <Route path = '*' element = {<NotFoundPage/>} />
