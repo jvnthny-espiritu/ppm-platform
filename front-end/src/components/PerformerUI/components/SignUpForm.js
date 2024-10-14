@@ -97,7 +97,6 @@ export default function SignUpForm() {
           id="campus"
           name="campus"
           type="campus"
-          placeholder="Alangilan"
           required
           size="small"
           disablePortal
@@ -113,7 +112,6 @@ export default function SignUpForm() {
           id="department"
           name="department"
           type="department"
-          placeholder="CICS"
           required
           size="small"
           disablePortal
@@ -130,7 +128,6 @@ export default function SignUpForm() {
           id="program"
           name="program"
           type="program"
-          placeholder="Select Program"
           required
           size="small"
           disablePortal
