@@ -6,7 +6,6 @@ import { Box } from '@mui/material';
 
 export default function PerformerProfile() {
   const [mode, setMode] = React.useState('light');
-  const [setShowCustomTheme] = React.useState(true);
 
   // This code only runs on the client side, to determine the system color preference
   React.useEffect(() => {
@@ -22,16 +21,6 @@ export default function PerformerProfile() {
       setMode(systemPrefersDark ? 'dark' : 'light');
     }
   }, []);
-
-  const toggleColorMode = () => {
-    const newMode = mode === 'dark' ? 'light' : 'dark';
-    setMode(newMode);
-    localStorage.setItem('themeMode', newMode); // Save the selected mode to localStorage
-  };
-
-  const toggleCustomTheme = () => {
-    setShowCustomTheme((prev) => !prev);
-  };
 
   return (
     <Box>

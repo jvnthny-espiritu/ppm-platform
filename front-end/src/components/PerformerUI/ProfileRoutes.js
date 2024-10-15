@@ -4,7 +4,6 @@ import { CreateProfile } from './CreateProfile'
 import PerfomerLanding from './PerformerLanding'
 import { ProfileLayout } from './ProfileLayout'
 import { EditProfile } from "./EditProfile"
-import PerformerProfile from "./PerformerProfile"
 
 export function ProfileRoutes() {
     return (

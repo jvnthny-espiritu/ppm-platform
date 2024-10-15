@@ -13,6 +13,7 @@ function App() {
     <main>
       <Routes>
         <Route path = '/' element = {<SignInSide/>} />
+        <Route path = '/sign-in' element = {<SignInSide/>} />
         <Route path = '/admin' element = {<DashboardLayoutAccount/>} />
         <Route path = '/profile/*' element={<ProfileRoutes/>} />
         <Route path = '/forms' element = {<Forms/>} />
