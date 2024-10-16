@@ -11,7 +11,6 @@ import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import getSignUpTheme from './theme/getSignUpTheme';
-import { SitemarkIcon } from './CustomIcons';
 import TemplateFrame from './TemplateFrame';
 import { useNavigate } from 'react-router-dom'; // Added for routing
 
@@ -166,7 +165,7 @@ export default function SignUp() {
         <CssBaseline enableColorScheme />
         <SignUpContainer direction="column" justifyContent="space-between">
           <Card variant="outlined">
-            <SitemarkIcon />
+      
             <Typography
               component="h1"
               variant="h4"
