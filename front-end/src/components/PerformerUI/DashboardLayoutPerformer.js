@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { createTheme } from '@mui/material/styles';
@@ -41,7 +40,7 @@ const demoTheme = createTheme({
   },
 });
 
-function DemoPageContent({ pathname }) {
+function DashboardPageSwitcher({ pathname }) {
   const currentNavItem = NAVIGATION.find(item => pathname.includes(item.segment));
 
   const ContentComponent = currentNavItem?.component || (() => (
@@ -63,13 +62,7 @@ function DemoPageContent({ pathname }) {
   );
 }
 
-DemoPageContent.propTypes = {
-  pathname: PropTypes.string.isRequired,
-};
-
-function DashboardLayoutAccount(props) {
-  const { window } = props;
-
+function DashboardLayoutPerformer() {
   const [session, setSession] = React.useState({
     user: {
       name: 'Billymer Salamat',
@@ -105,9 +98,6 @@ function DashboardLayoutAccount(props) {
     };
   }, [pathname]);
 
-  // Remove this const when copying and pasting into your project.
-  const demoWindow = window !== undefined ? window() : undefined;
-
   return (
     // preview-start
     <AppProvider
@@ -116,22 +106,13 @@ function DashboardLayoutAccount(props) {
       navigation={NAVIGATION}
       router={router}
       theme={demoTheme}
-      window={demoWindow}
     >
       <DashboardLayout>
-        <DemoPageContent pathname={pathname} />
+        <DashboardPageSwitcher pathname={pathname} />
       </DashboardLayout>
     </AppProvider>
     // preview-end
   );
 }
 
-DashboardLayoutAccount.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * Remove this when copying and pasting into your project.
-   */
-  window: PropTypes.func,
-};
-
-export default DashboardLayoutAccount;
+export default DashboardLayoutPerformer;

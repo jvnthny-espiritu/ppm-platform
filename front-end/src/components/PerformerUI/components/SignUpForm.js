@@ -1,6 +1,4 @@
 import * as React from 'react';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import Grid from '@mui/material/Grid2';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -10,6 +8,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { culturalgroups, campuses, departments, programs } from '../../../data/registrationValues';
 import { useState } from 'react';
+import { Divider } from '@mui/material';
 
 const FormGrid = styled(Grid)(() => ({
   display: 'flex',
@@ -31,11 +30,9 @@ export default function SignUpForm() {
   };
 
   return (
-    <Grid container spacing={3}>
-      <FormGrid size={{ xs: 12 }}>
-        <h1>Performer Registration Form</h1>
-      </FormGrid>
-      <FormGrid size={{ xs: 12, md: 6 }}>
+    <>
+    <Grid container spacing={3} padding={3}>
+      <FormGrid size={{ xs: 8, sm: 6, md: 6, lg: 6 }}>
         <FormLabel htmlFor="first-name" required>
           First name
         </FormLabel>
@@ -48,7 +45,7 @@ export default function SignUpForm() {
           size="small"
         />
       </FormGrid>
-      <FormGrid size={{ xs: 12, md: 6 }}>
+      <FormGrid size={{ xs: 8, sm: 6, md: 6, lg: 6 }}>
         <FormLabel htmlFor="last-name" required>
           Last name
         </FormLabel>
@@ -61,7 +58,7 @@ export default function SignUpForm() {
           size="small"
         />
       </FormGrid>
-      <FormGrid size={{ xs: 12 }}>
+      <FormGrid size={{ xs: 8, sm: 6, md: 6, lg: 6 }}>
         <FormLabel htmlFor="email" required>
           Email address
         </FormLabel>
@@ -74,7 +71,7 @@ export default function SignUpForm() {
           size="small"
         />
       </FormGrid>
-      <FormGrid size={{ xs: 12, md: 6 }}>
+      <FormGrid size={{ xs: 8, sm: 6, md: 6, lg: 6 }}>
         <FormLabel htmlFor="cgroup" required>
           Cultural Group
         </FormLabel>
@@ -89,7 +86,7 @@ export default function SignUpForm() {
           renderInput={(params) => <TextField {...params} />}
         />
       </FormGrid>
-      <FormGrid size={{ xs: 12, md: 6 }}>
+      <FormGrid size={{ xs: 8, sm: 6, md: 6, lg: 6  }}>
         <FormLabel htmlFor="cgroup" required>
           Campus
         </FormLabel>
@@ -104,7 +101,7 @@ export default function SignUpForm() {
           renderInput={(params) => <TextField {...params} />}
         />
       </FormGrid>
-      <FormGrid size={{ xs: 12, md: 6 }}>
+      <FormGrid size={{ xs: 8, sm: 6, md: 6, lg: 6  }}>
         <FormLabel htmlFor="department" required>
           Department
         </FormLabel>
@@ -120,7 +117,7 @@ export default function SignUpForm() {
           renderInput={(params) => <TextField {...params} />}
         />
       </FormGrid>
-      <FormGrid size={{ xs: 12, md: 6 }}>
+      <FormGrid size={{ xs: 8, sm: 6, md: 6, lg: 6  }}>
         <FormLabel htmlFor="program" required>
           Program
         </FormLabel>
@@ -135,7 +132,7 @@ export default function SignUpForm() {
           renderInput={(params) => <TextField {...params} />}
         />
       </FormGrid>
-      <FormGrid size={{ xs: 6 }}>
+      <FormGrid size={{ xs: 8, sm: 6, md: 6, lg: 6  }}>
         <FormLabel htmlFor="srcode" required>
           SR-Code
         </FormLabel>
@@ -148,15 +145,13 @@ export default function SignUpForm() {
           size="small"
         />
       </FormGrid>
-      <FormGrid size={{ xs: 12 }}>
-        <FormControlLabel
-          control={<Checkbox name="agreeBox" value="yes" />}
-          label="I agree to the terms and conditions."
-        />
-      </FormGrid>
+    </Grid>
+    <Divider/>
+    <Grid sx {...{py:{xs: 2, sm: 2, md: 2, lg:  2}}} >
       <Button variant="outlined" size="Medium">
-        Submit
+      Save
       </Button>
     </Grid>
+    </>
   );
 }
