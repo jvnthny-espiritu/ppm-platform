@@ -8,7 +8,6 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -20,27 +19,24 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 export default function CustomizedDialogs() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  // Automatically show the modal when the component mounts, only if it hasn't been shown before
+  React.useEffect(() => {
+    const modalShown = sessionStorage.getItem('modalShown');
+    if (!modalShown) {
+      setOpen(true);
+      sessionStorage.setItem('modalShown', 'true'); // Store the flag in sessionStorage
+    }
+  }, []);
+  
+
   const handleClose = () => {
     setOpen(false);
   };
 
   return (
     <React.Fragment>
-    <IconButton
-        sx={{
-          cursor: 'pointer',
-          margin: 2, // Optional: adds some space around the icon
-        }}
-        onClick={handleClickOpen}
-      >
-        <NotificationsIcon />
-      </IconButton>
-    
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
@@ -63,7 +59,7 @@ export default function CustomizedDialogs() {
         </IconButton>
         <DialogContent dividers>
           <Typography gutterBottom>
-            *Please complete your performer profile* something like that, still finalizing what to put here.
+            Welcome to the Student-Performer Portal. Here is where you can complete your performer profile.
           </Typography>
         </DialogContent>
         <DialogActions>
