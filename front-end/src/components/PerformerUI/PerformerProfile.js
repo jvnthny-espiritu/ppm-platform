@@ -18,7 +18,7 @@ import {
   campuses,
   departments,
   programs,
-} from "C:/Users/marcd/Documents/GitHub/my-pp/front-end/src/data/registrationValues.js";
+} from "../../data/registrationValues.js";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   backgroundColor: "#AF1740",
