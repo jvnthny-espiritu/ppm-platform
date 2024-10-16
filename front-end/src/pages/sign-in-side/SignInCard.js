@@ -15,7 +15,7 @@ import { UserContext } from '../../_context/UserContext';
 
 
 import ForgotPassword from './ForgotPassword';
-import { SitemarkIcon } from './CustomIcons';
+
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -122,7 +122,7 @@ export default function SignInCard() {
   return (
     <Card variant="outlined">
       <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-        <SitemarkIcon />
+  
       </Box>
       <Typography
         component="h1"
