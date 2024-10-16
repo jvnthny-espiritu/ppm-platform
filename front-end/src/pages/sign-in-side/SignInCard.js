@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MuiCard from '@mui/material/Card';
@@ -9,8 +9,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-
 import { styled } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom'; // Add the useNavigate hook
 
 import ForgotPassword from './ForgotPassword';
 import { SitemarkIcon } from './CustomIcons';
@@ -34,11 +34,12 @@ const Card = styled(MuiCard)(({ theme }) => ({
 }));
 
 export default function SignInCard() {
-  const [emailError, setEmailError] = React.useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
-  const [passwordError, setPasswordError] = React.useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-  const [open, setOpen] = React.useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -48,16 +49,43 @@ export default function SignInCard() {
     setOpen(false);
   };
 
-  const handleSubmit = (event) => {
-    if (emailError || passwordError) {
-      event.preventDefault();
-      return;
+  // Updated handleSubmit to perform the API call
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!validateInputs()) {
+      return; // Prevent form submission if inputs are invalid
     }
+
     const data = new FormData(event.currentTarget);
-    console.log({
+
+    const credentials = {
       email: data.get('email'),
       password: data.get('password'),
-    });
+    };
+
+    try {
+      // Make API call to login
+      const response = await fetch('http://localhost:4000/api/sign-in', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(credentials),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Login successful:', result);
+        navigate('/profile'); // Navigate to dashboard upon successful login
+      } else {
+        const error = await response.json();
+        console.error('Login error:', error.message);
+        // Handle login errors like invalid credentials
+        setPasswordErrorMessage('Invalid email or password.');
+        setPasswordError(true);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   const validateInputs = () => {
@@ -101,7 +129,7 @@ export default function SignInCard() {
       </Typography>
       <Box
         component="form"
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit} // Handle form submission
         noValidate
         sx={{ display: 'flex', flexDirection: 'column', width: '100%', gap: 2 }}
       >
@@ -156,17 +184,13 @@ export default function SignInCard() {
           label="Remember me"
         />
         <ForgotPassword open={open} handleClose={handleClose} />
-        <Button type="submit" fullWidth variant="contained" onClick={validateInputs}>
+        <Button type="submit" fullWidth variant="contained">
           Sign in
         </Button>
         <Typography sx={{ textAlign: 'center' }}>
           Don&apos;t have an account?{' '}
           <span>
-            <Link
-              href="/sign-up"
-              variant="body2"
-              sx={{ alignSelf: 'center' }}
-            >
+            <Link href="/sign-up" variant="body2" sx={{ alignSelf: 'center' }}>
               Sign up
             </Link>
           </span>

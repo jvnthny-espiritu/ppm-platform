@@ -13,6 +13,7 @@ import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import getSignUpTheme from './theme/getSignUpTheme';
 import { SitemarkIcon } from './CustomIcons';
 import TemplateFrame from './TemplateFrame';
+import { useNavigate } from 'react-router-dom'; // Added for routing
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -59,14 +60,14 @@ export default function SignUp() {
   const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-  // This code only runs on the client side, to determine the system color preference
+  
+  const navigate = useNavigate(); // Add useNavigate
+
   React.useEffect(() => {
-    // Check if there is a preferred mode in localStorage
     const savedMode = localStorage.getItem('themeMode');
     if (savedMode) {
       setMode(savedMode);
     } else {
-      // If no preference is found, it uses system preference
       const systemPrefersDark = window.matchMedia(
         '(prefers-color-scheme: dark)',
       ).matches;
@@ -77,7 +78,7 @@ export default function SignUp() {
   const toggleColorMode = () => {
     const newMode = mode === 'dark' ? 'light' : 'dark';
     setMode(newMode);
-    localStorage.setItem('themeMode', newMode); // Save the selected mode to localStorage
+    localStorage.setItem('themeMode', newMode);
   };
 
   const toggleCustomTheme = () => {
@@ -122,9 +123,8 @@ export default function SignUp() {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();  // Prevent the default form submission behavior
+    event.preventDefault();
 
-    // Validate input
     if (!validateInputs()) return;
 
     const data = {
@@ -145,11 +145,10 @@ export default function SignUp() {
       if (response.ok) {
         const result = await response.json();
         console.log('User created successfully:', result);
-        // Redirect to login page or show success message
+        navigate('/sign-in'); // Redirect to login page on successful signup
       } else {
         const error = await response.json();
         console.error('Error creating user:', error.message);
-        // Show error message on the UI
       }
     } catch (error) {
       console.error('Error:', error);
