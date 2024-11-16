@@ -8,6 +8,8 @@ import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { Forms } from '../../pages/Forms';
 import PerformerProfile from './PerformerProfile';
+import { useNavigate } from 'react-router-dom';
+
         
 const NAVIGATION = [
   {
@@ -63,30 +65,38 @@ function DashboardPageSwitcher({ pathname }) {
 }
 
 function DashboardLayoutPerformer() {
+  const navigate = useNavigate(); // Get navigate function
+
+  const initialUserData = JSON.parse(localStorage.getItem('userData')) || {
+    name: '',
+    email: '',
+    image: '',
+  };
+
   const [session, setSession] = React.useState({
-    user: {
-      name: 'Billymer Salamat',
-      email: 'billysalamat@gmail.com',
-      image: 'https://avatars.githubusercontent.com/u/19550456',
-    },
+    user: initialUserData,
   });
 
   const authentication = React.useMemo(() => {
     return {
-      signIn: () => {
+      signIn: (userData) => {
         setSession({
           user: {
-            name: 'Billymer Salamat',
-            email: 'billysalamat@gmail.com',
-            image: 'https://avatars.githubusercontent.com/u/19550456',
+            name: userData.name,
+            email: userData.email,
+            image: userData.image || '', // Set default image or keep it empty
           },
         });
+        // Optionally store user data in localStorage after login
+        localStorage.setItem('userData', JSON.stringify(userData));
       },
       signOut: () => {
         setSession(null);
+        localStorage.removeItem('authToken'); // Remove token if stored
+        navigate('/sign-in'); // Redirect to sign-in page
       },
     };
-  }, []);
+  }, [navigate]);
 
   const [pathname, setPathname] = React.useState('/dashboard');
 
