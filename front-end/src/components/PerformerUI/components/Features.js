@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-
+import Achievements from './Achievements';
 
 export default function Features() {
 
@@ -31,6 +31,7 @@ export default function Features() {
         >
           Linked In-like performer's profile goes here.
         </Typography>
+        <Achievements/>
       </Box>
     </Container>
   );

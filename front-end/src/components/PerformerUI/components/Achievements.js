@@ -51,7 +51,7 @@ const items = [
   },
 ];
 
-export default function Highlights() {
+export default function Achievements() {
   return (
     <Box
       id="highlights"
