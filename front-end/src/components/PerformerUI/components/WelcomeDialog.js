@@ -59,7 +59,7 @@ export default function CustomizedDialogs() {
         </IconButton>
         <DialogContent dividers>
           <Typography gutterBottom>
-            Welcome to the Student-Performer Portal. Here is where you can complete your performer profile.
+            Welcome to the Student-Performer Portal. Here is where you can complete your performer profile. Please fill in all the other required information.
           </Typography>
         </DialogContent>
         <DialogActions>

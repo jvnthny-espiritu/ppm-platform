@@ -5,59 +5,56 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import AutoFixHighRoundedIcon from '@mui/icons-material/AutoFixHighRounded';
-import ConstructionRoundedIcon from '@mui/icons-material/ConstructionRounded';
-import QueryStatsRoundedIcon from '@mui/icons-material/QueryStatsRounded';
-import SettingsSuggestRoundedIcon from '@mui/icons-material/SettingsSuggestRounded';
-import SupportAgentRoundedIcon from '@mui/icons-material/SupportAgentRounded';
-import ThumbUpAltRoundedIcon from '@mui/icons-material/ThumbUpAltRounded';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import { Divider } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const items = [
   {
-    icon: <SettingsSuggestRoundedIcon />,
-    title: 'Adaptable performance',
+    icon: <EmojiEventsIcon />,
+    title: 'Award Name 1',
     description:
-      'Our product effortlessly adjusts to your needs, boosting efficiency and simplifying your tasks.',
+      'Event Name 1',
   },
   {
-    icon: <ConstructionRoundedIcon />,
-    title: 'Built to last',
+    icon: <EmojiEventsIcon />,
+    title: 'Award Name 2',
     description:
-      'Experience unmatched durability that goes above and beyond with lasting investment.',
+      'Event Name 2',
   },
   {
-    icon: <ThumbUpAltRoundedIcon />,
-    title: 'Great user experience',
+    icon: <EmojiEventsIcon />,
+    title: 'Award Name 3',
     description:
-      'Integrate our product into your routine with an intuitive and easy-to-use interface.',
+      'Event Name 3',
   },
   {
-    icon: <AutoFixHighRoundedIcon />,
-    title: 'Innovative functionality',
+    icon: <EmojiEventsIcon />,
+    title: 'Award Name 4',
     description:
-      'Stay ahead with features that set new standards, addressing your evolving needs better than the rest.',
+      'Event Name 4',
   },
   {
-    icon: <SupportAgentRoundedIcon />,
-    title: 'Reliable support',
+    icon: <EmojiEventsIcon />,
+    title: 'Award Name 5',
     description:
-      'Count on our responsive customer support, offering assistance that goes beyond the purchase.',
+      'Event Name 5',
   },
   {
-    icon: <QueryStatsRoundedIcon />,
-    title: 'Precision in every detail',
+    icon: <EmojiEventsIcon />,
+    title: 'Award Name 6',
     description:
-      'Enjoy a meticulously crafted product where small touches make a significant impact on your overall experience.',
+      'Event Name 6',
   },
 ];
 
 export default function Achievements() {
   return (
     <Box
-      id="highlights"
+      id="achievements"
       sx={{
-        pt: { xs: 4, sm: 12 },
-        pb: { xs: 8, sm: 16 },
+        pt: { xs: 2, sm: 2, md: 2, lg: 2 },
         color: 'white',
         bgcolor: 'grey.900',
       }}
@@ -68,23 +65,26 @@ export default function Achievements() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: { xs: 3, sm: 6 },
+          gap: { xs: 2, sm: 2, md: 2, lg: 4},
         }}
       >
         <Box
           sx={{
-            width: { sm: '100%', md: '60%' },
-            textAlign: { sm: 'left', md: 'center' },
+            width: { sm: '100%', md: '100%', lg: '100%' },
+            textAlign: { xs: 'center', sm: 'left', md: 'left', lg: 'left'},
           }}
         >
-          <Typography component="h2" variant="h4" gutterBottom>
-            Highlights
+          <Typography>
+            <h1>Achievements</h1>
           </Typography>
-          <Typography variant="body1" sx={{ color: 'grey.400' }}>
-            Explore why our product stands out: adaptability, durability,
-            user-friendly design, and innovation. Enjoy reliable customer support and
-            precision in every detail.
-          </Typography>
+          <Box display="flex" alignItems="center" gap={1}>
+            <Typography variant="h5">
+              10
+            </Typography>
+            <Typography variant="h6" sx={{ color: 'grey.400' }}>
+              Total number of awards
+            </Typography>
+          </Box>
         </Box>
         <Grid container spacing={2}>
           {items.map((item, index) => (
@@ -114,6 +114,12 @@ export default function Achievements() {
               </Stack>
             </Grid>
           ))}
+        </Grid >
+        <Grid sx {...{pb:{xs: 2, sm: 2, md: 2, lg: 2}}} >
+          <IconButton aria-label="show-all" size='small'>
+          Show all 
+          <ArrowForwardIcon/>
+          </IconButton>
         </Grid>
       </Container>
     </Box>
