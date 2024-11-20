@@ -3,8 +3,7 @@ import Divider from '@mui/material/Divider';
 import Features from './components/Features';
 import Footer from './components/Footer';
 import { Box, Paper } from '@mui/material';
-import SignUpForm from './components/SignUpForm';
-import Dialog from './components/Dialog';
+import PersonalInformation from './components/PersonalInformation';
 
 export default function PerformerProfile() {
   const [mode, setMode] = React.useState('light');
@@ -26,9 +25,9 @@ export default function PerformerProfile() {
 
   return (
     <Box sx={{ width: '90%' }}>
-      <Dialog />
+      
       <Paper sx={{ minHeight: 400, width: '100%' }}>
-        <SignUpForm/>
+        <PersonalInformation />
       </Paper>
       <Features />
       <Divider />

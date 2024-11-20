@@ -8,6 +8,7 @@ import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { Forms } from '../../pages/Forms';
 import PerformerProfile from './PerformerProfile';
+import WelcomeDialog from './components/WelcomeDialog';
         
 const NAVIGATION = [
   {
@@ -108,6 +109,7 @@ function DashboardLayoutPerformer() {
       theme={demoTheme}
     >
       <DashboardLayout>
+      <WelcomeDialog />
         <DashboardPageSwitcher pathname={pathname} />
       </DashboardLayout>
     </AppProvider>

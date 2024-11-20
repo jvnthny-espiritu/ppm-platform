@@ -8,14 +8,14 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { culturalgroups, campuses, departments, programs } from '../../../data/registrationValues';
 import { useState } from 'react';
-import { Divider } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
 
 const FormGrid = styled(Grid)(() => ({
   display: 'flex',
   flexDirection: 'column',
 }));
 
-export default function SignUpForm() {
+export default function PersonalInformation() {
   const [selectedDepartment, setSelectedDepartment] = useState(null);
   const [filteredPrograms, setFilteredPrograms] = useState([]);
 
@@ -32,7 +32,12 @@ export default function SignUpForm() {
   return (
     <>
     <Grid container spacing={3} padding={3}>
-      <FormGrid size={{ xs: 8, sm: 6, md: 6, lg: 6 }}>
+      <FormGrid size={{ xs: 12, sm: 12, md: 12, lg: 12 }}>
+        <Typography>
+          <h1>Personal Information</h1>
+        </Typography>
+      </FormGrid>
+      <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
         <FormLabel htmlFor="first-name" required>
           First name
         </FormLabel>
@@ -45,7 +50,7 @@ export default function SignUpForm() {
           size="small"
         />
       </FormGrid>
-      <FormGrid size={{ xs: 8, sm: 6, md: 6, lg: 6 }}>
+      <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
         <FormLabel htmlFor="last-name" required>
           Last name
         </FormLabel>
@@ -58,7 +63,7 @@ export default function SignUpForm() {
           size="small"
         />
       </FormGrid>
-      <FormGrid size={{ xs: 8, sm: 6, md: 6, lg: 6 }}>
+      <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
         <FormLabel htmlFor="email" required>
           Email address
         </FormLabel>
@@ -71,7 +76,7 @@ export default function SignUpForm() {
           size="small"
         />
       </FormGrid>
-      <FormGrid size={{ xs: 8, sm: 6, md: 6, lg: 6 }}>
+      <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
         <FormLabel htmlFor="cgroup" required>
           Cultural Group
         </FormLabel>
@@ -86,7 +91,7 @@ export default function SignUpForm() {
           renderInput={(params) => <TextField {...params} />}
         />
       </FormGrid>
-      <FormGrid size={{ xs: 8, sm: 6, md: 6, lg: 6  }}>
+      <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6  }}>
         <FormLabel htmlFor="cgroup" required>
           Campus
         </FormLabel>
@@ -101,7 +106,7 @@ export default function SignUpForm() {
           renderInput={(params) => <TextField {...params} />}
         />
       </FormGrid>
-      <FormGrid size={{ xs: 8, sm: 6, md: 6, lg: 6  }}>
+      <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6  }}>
         <FormLabel htmlFor="department" required>
           Department
         </FormLabel>
@@ -117,7 +122,7 @@ export default function SignUpForm() {
           renderInput={(params) => <TextField {...params} />}
         />
       </FormGrid>
-      <FormGrid size={{ xs: 8, sm: 6, md: 6, lg: 6  }}>
+      <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6  }}>
         <FormLabel htmlFor="program" required>
           Program
         </FormLabel>
@@ -132,7 +137,7 @@ export default function SignUpForm() {
           renderInput={(params) => <TextField {...params} />}
         />
       </FormGrid>
-      <FormGrid size={{ xs: 8, sm: 6, md: 6, lg: 6  }}>
+      <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6  }}>
         <FormLabel htmlFor="srcode" required>
           SR-Code
         </FormLabel>
