@@ -6,7 +6,6 @@ import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-import { Divider } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 

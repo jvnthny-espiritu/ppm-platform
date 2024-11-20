@@ -185,7 +185,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="name"
-                  placeholder="Jon Snow"
+                  placeholder="Billymer Salamat"
                   error={nameError}
                   helperText={nameErrorMessage}
                   color={nameError ? 'error' : 'primary'}
@@ -197,7 +197,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="email"
-                  placeholder="your@email.com"
+                  placeholder="20-12345@g.batstate-u.edu.ph"
                   name="email"
                   autoComplete="email"
                   variant="outlined"

@@ -32,9 +32,8 @@ export default function PersonalInformation() {
 
   return (
     <Box
-    id="achievements"
+    id="personal-info"
     sx={{
-      pt: { xs: 2, sm: 2, md: 2, lg: 2 },
       color: 'white',
       bgcolor: 'grey.900',
     }}>
