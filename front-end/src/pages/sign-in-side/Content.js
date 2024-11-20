@@ -7,7 +7,7 @@ const items = [
   {
     title: 'Welcome to the BatStateU Office of Culture and Arts - Performer’s Profile Management Platform',
     description:
-      '\nsA dedicated platform essential to efficiently manage performer profiles, track their progress, and showcase their achievements.'
+      '\nA dedicated platform essential to efficiently manage performer profiles, track their progress, and showcase their achievements.'
   }
 ];
 
