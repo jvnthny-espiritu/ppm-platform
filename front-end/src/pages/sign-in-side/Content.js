@@ -3,26 +3,59 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
+import AutoFixHighRoundedIcon from '@mui/icons-material/AutoFixHighRounded';
+import ConstructionRoundedIcon from '@mui/icons-material/ConstructionRounded';
+import SettingsSuggestRoundedIcon from '@mui/icons-material/SettingsSuggestRounded';
+import ThumbUpAltRoundedIcon from '@mui/icons-material/ThumbUpAltRounded';
+
+// Logo import (if using a file in the public folder)
+const logoSrc = '/assets/images/office_logo.png'; // Adjust path based on your setup
+
 const items = [
   {
-    title: 'Welcome to the BatStateU Office of Culture and Arts - Performer’s Profile Management Platform',
+    title: 'Office of The Culture and Arts',
     description:
-      '\nA dedicated platform essential to efficiently manage performer profiles, track their progress, and showcase their achievements.'
-  }
+      'BatStateU Office of Culture and Arts - Performer’s Profile Management Platform ',
+  },
 ];
 
 export default function Content() {
   return (
     <Stack
-      sx={{ flexDirection: 'column', alignSelf: 'center', gap: 4, maxWidth: 450 }}
+      sx={{
+        flexDirection: 'column',
+        alignSelf: 'center',
+        gap: 4,
+        maxWidth: 450,
+        alignItems: 'center', // Center-align the content
+        textAlign: 'center', // Center the text
+      }}
     >
-      <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+      {/* Logo */}
+      <Box>
+        <img
+          src={"/assets/OCA-Logo.png"}
+          alt="Office of the Culture and Arts Logo"
+          style={{
+            maxWidth: '100px', // Adjust width as needed
+            height: 'auto',
+            marginBottom: '16px', // Add spacing below the logo
+          }}
+        />
       </Box>
+
+      {/* Content */}
       {items.map((item, index) => (
         <Stack key={index} direction="row" sx={{ gap: 2 }}>
           {item.icon}
           <div>
-            <Typography gutterBottom sx={{ fontWeight: 'medium' }}>
+            <Typography
+              gutterBottom
+              sx={{
+                fontWeight: 'medium',
+                fontSize: '1.5rem', // Adjust font size
+              }}
+            >
               {item.title}
             </Typography>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
