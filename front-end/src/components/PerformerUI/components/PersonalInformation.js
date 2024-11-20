@@ -1,6 +1,7 @@
 import * as React from 'react';
 import FormLabel from '@mui/material/FormLabel';
 import Grid from '@mui/material/Grid2';
+import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/system';
@@ -30,7 +31,13 @@ export default function PersonalInformation() {
   };
 
   return (
-    <>
+    <Box
+    id="achievements"
+    sx={{
+      pt: { xs: 2, sm: 2, md: 2, lg: 2 },
+      color: 'white',
+      bgcolor: 'grey.900',
+    }}>
     <Grid container spacing={3} padding={3}>
       <FormGrid size={{ xs: 12, sm: 12, md: 12, lg: 12 }}>
         <Typography>
@@ -157,6 +164,6 @@ export default function PersonalInformation() {
       Save
       </Button>
     </Grid>
-    </>
+    </Box>
   );
 }
