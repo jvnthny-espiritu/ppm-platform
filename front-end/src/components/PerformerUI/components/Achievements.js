@@ -1,54 +1,22 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid2';
+import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-import IconButton from '@mui/material/IconButton';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-
-const items = [
-  {
-    icon: <EmojiEventsIcon />,
-    title: 'Award Name 1',
-    description:
-      'Event Name 1',
-  },
-  {
-    icon: <EmojiEventsIcon />,
-    title: 'Award Name 2',
-    description:
-      'Event Name 2',
-  },
-  {
-    icon: <EmojiEventsIcon />,
-    title: 'Award Name 3',
-    description:
-      'Event Name 3',
-  },
-  {
-    icon: <EmojiEventsIcon />,
-    title: 'Award Name 4',
-    description:
-      'Event Name 4',
-  },
-  {
-    icon: <EmojiEventsIcon />,
-    title: 'Award Name 5',
-    description:
-      'Event Name 5',
-  },
-  {
-    icon: <EmojiEventsIcon />,
-    title: 'Award Name 6',
-    description:
-      'Event Name 6',
-  },
-];
+import Button from '@mui/material/Button';
+import achievementsData from '../../../data/achievementsData.json';
 
 export default function Achievements() {
+  const [showAll, setShowAll] = useState(false);
+
+  // Display either all achievements or only the first 6
+  const displayedAchievements = showAll
+    ? achievementsData
+    : achievementsData.slice(0, 6);
+
   return (
     <Box
       id="achievements"
@@ -60,48 +28,47 @@ export default function Achievements() {
     >
       <Container
         sx={{
-          position: 'relative',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: { xs: 2, sm: 2, md: 2, lg: 4},
+          gap: { xs: 2, sm: 2, md: 2, lg: 4 },
         }}
       >
         <Box
           sx={{
-            width: { sm: '100%', md: '100%', lg: '100%' },
-            textAlign: { xs: 'center', sm: 'left', md: 'left', lg: 'left'},
+            width: '100%',
+            textAlign: { xs: 'center', sm: 'left', md: 'left', lg: 'left' },
           }}
         >
           <Typography>
             <h1>Achievements</h1>
           </Typography>
           <Box display="flex" alignItems="center" gap={1}>
-            <Typography variant="h5">
-              10
-            </Typography>
+            <Typography variant="h5">{achievementsData.length}</Typography>
             <Typography variant="h6" sx={{ color: 'grey.400' }}>
               Total number of awards
             </Typography>
           </Box>
         </Box>
-        <Grid container spacing={2}>
-          {items.map((item, index) => (
-            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
+        <Grid container spacing={2} sx={{ maxWidth: '100%' }}>
+          {displayedAchievements.map((item, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
               <Stack
                 direction="column"
                 component={Card}
                 spacing={1}
-                useFlexGap
                 sx={{
                   color: 'inherit',
                   p: 3,
                   height: '100%',
                   borderColor: 'hsla(220, 25%, 25%, 0.3)',
                   backgroundColor: 'grey.800',
+                  minWidth: '250px', // Set a minimum width for uniformity
                 }}
               >
-                <Box sx={{ opacity: '50%' }}>{item.icon}</Box>
+                <Box sx={{ opacity: '50%' }}>
+                  <EmojiEventsIcon />
+                </Box>
                 <div>
                   <Typography gutterBottom sx={{ fontWeight: 'medium' }}>
                     {item.title}
@@ -113,13 +80,18 @@ export default function Achievements() {
               </Stack>
             </Grid>
           ))}
-        </Grid >
-        <Grid sx {...{pb:{xs: 2, sm: 2, md: 2, lg: 2}}} >
-          <IconButton aria-label="show-all" size='small'>
-          Show all 
-          <ArrowForwardIcon/>
-          </IconButton>
         </Grid>
+        <Box sx={{ py: 3 }}>
+          <Button
+            aria-label="show-all"
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={() => setShowAll(!showAll)}
+          >
+            {showAll ? 'Show Less' : 'Show All'}
+          </Button>
+        </Box>
       </Container>
     </Box>
   );
