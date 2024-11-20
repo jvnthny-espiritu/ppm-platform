@@ -1,9 +1,9 @@
 import * as React from 'react';
 import Divider from '@mui/material/Divider';
-import Features from './components/Features';
 import Footer from './components/Footer';
 import { Box, Paper } from '@mui/material';
 import PersonalInformation from './components/PersonalInformation';
+import Achievements from './components/Achievements';
 
 export default function PerformerProfile() {
   const [mode, setMode] = React.useState('light');
@@ -24,12 +24,13 @@ export default function PerformerProfile() {
   }, []);
 
   return (
-    <Box sx={{ width: '90%' }}>
+    <Box sx={{
+      width: '90%',
+      }}>
       
-      <Paper sx={{ minHeight: 400, width: '100%' }}>
-        <PersonalInformation />
-      </Paper>
-      <Features />
+      <PersonalInformation />
+      <Divider />
+      <Achievements />
       <Divider />
       <Footer />
     </Box>
