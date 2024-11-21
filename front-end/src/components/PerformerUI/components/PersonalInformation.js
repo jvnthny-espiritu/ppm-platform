@@ -33,10 +33,7 @@ export default function PersonalInformation() {
   return (
     <Box
     id="personal-info"
-    sx={{
-      color: 'white',
-      bgcolor: 'grey.900',
-    }}>
+    >
     <Grid container spacing={3} padding={3}>
       <FormGrid size={{ xs: 12, sm: 12, md: 12, lg: 12 }}>
         <Typography>
@@ -157,12 +154,12 @@ export default function PersonalInformation() {
         />
       </FormGrid>
     </Grid>
-    <Divider/>
-    <Grid sx {...{py:{xs: 2, sm: 2, md: 2, lg:  2}}} >
+    <Grid sx {...{pb:{xs: 3, sm: 3, md: 3, lg:  3}}} >
       <Button variant="outlined" size="Medium">
       Save
       </Button>
     </Grid>
+    <Divider/>
     </Box>
   );
 }

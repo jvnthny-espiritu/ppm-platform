@@ -27,7 +27,7 @@ export default function PerformerProfile() {
     <>
     <Box sx={{
       px: 4,
-      pb: 4,
+      pb: 2,
       }}>
       <PersonalInformation />
     </Box>

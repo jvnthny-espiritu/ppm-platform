@@ -75,18 +75,12 @@ export default function Achievements() {
   return (
     <Box
       id="achievements"
-      sx={{
-        pt: { xs: 2, sm: 2, md: 2, lg: 2 },
-        color: 'white',
-        bgcolor: 'grey.900',
-      }}
     >
       <Container
         sx={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: { xs: 2, sm: 2, md: 2, lg: 4 },
         }}
       >
         <Box
@@ -100,7 +94,7 @@ export default function Achievements() {
           </Typography>
           <Box display="flex" alignItems="center" gap={1}>
             <Typography variant="h5">{achievements.length}</Typography>
-            <Typography variant="h6" sx={{ color: 'grey.400' }}>
+            <Typography variant="h6">
               Total number of awards
             </Typography>
           </Box>
@@ -195,8 +189,6 @@ export default function Achievements() {
                     color: 'inherit',
                     p: 3,
                     height: '100%',
-                    borderColor: 'hsla(220, 25%, 25%, 0.3)',
-                    backgroundColor: 'grey.800',
                     minWidth: '250px',
                   }}
                 >
@@ -207,7 +199,7 @@ export default function Achievements() {
                     <Typography gutterBottom sx={{ fontWeight: 'medium' }}>
                       {item.title}
                     </Typography>
-                    <Typography variant="body2" sx={{ color: 'grey.400' }}>
+                    <Typography variant="body2">
                       {item.description}
                     </Typography>
                   </div>

@@ -10,6 +10,7 @@ import { Forms } from '../../pages/Forms';
 import PerformerProfile from './PerformerProfile';
 import WelcomeDialog from './components/WelcomeDialog';
 import { useNavigate } from "react-router-dom";
+import Footer from './components/Footer';
         
 const NAVIGATION = [
   {
@@ -52,7 +53,7 @@ function DashboardPageSwitcher({ pathname }) {
   return (
     <Box
       sx={{
-        py: 4,
+        py: 2,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

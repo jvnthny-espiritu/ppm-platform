@@ -1,6 +1,8 @@
 import React from 'react';
 import { Box, Typography, Button, Card, CardContent } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
+import Footer from '../components/Footer';
+import Divider from '@mui/material/Divider';
 
 export function Forms() {
   const forms = [
@@ -14,17 +16,17 @@ export function Forms() {
   ];  
 
   return (
-    <Box sx={{ px: 4, textAlign: 'center' }}>
+    <Box sx={{ px: 4, pt:2, textAlign: 'center' }}>
       <Typography>
         <h1>Downloadable Forms</h1>
       </Typography>
       <Box
         sx={{
           display: 'flex',
+          pb: 4,
           flexWrap: 'wrap',
           gap: 3,
           justifyContent: 'center',
-          mt: 4,
         }}
       >
         {forms.map((form, index) => (
@@ -57,6 +59,8 @@ export function Forms() {
           </Card>
         ))}
       </Box>
+      <Divider />
+      <Footer />
     </Box>
   );
 }
