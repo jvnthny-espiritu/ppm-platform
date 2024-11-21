@@ -123,15 +123,15 @@ export default function SignUp() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     if (!validateInputs()) return;
-
+  
     const data = {
       name: document.getElementById('name').value,
       email: document.getElementById('email').value,
       password: document.getElementById('password').value,
     };
-
+  
     try {
       const response = await fetch('http://localhost:4000/api/sign-up', {
         method: 'POST',
@@ -140,10 +140,17 @@ export default function SignUp() {
         },
         body: JSON.stringify(data),
       });
-
+  
       if (response.ok) {
         const result = await response.json();
         console.log('User created successfully:', result);
+  
+        // Store user data in localStorage
+        localStorage.setItem('userData', JSON.stringify({
+          name: data.name,
+          email: data.email,
+        }));
+  
         navigate('/sign-in'); // Redirect to login page on successful signup
       } else {
         const error = await response.json();
@@ -153,6 +160,7 @@ export default function SignUp() {
       console.error('Error:', error);
     }
   };
+  
 
   return (
     <TemplateFrame
@@ -165,6 +173,7 @@ export default function SignUp() {
         <CssBaseline enableColorScheme />
         <SignUpContainer direction="column" justifyContent="space-between">
           <Card variant="outlined">
+      
             <Typography
               component="h1"
               variant="h4"

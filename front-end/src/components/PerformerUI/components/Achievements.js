@@ -92,7 +92,14 @@ export default function Achievements() {
           <Typography>
             <h1>Achievements</h1>
           </Typography>
-          <Box display="flex" alignItems="center" gap={1}>
+          <Box
+            sx={{
+              mb: 2,
+            }} 
+            display="flex"
+            alignItems="center"
+            gap={1}>
+              
             <Typography variant="h5">{achievements.length}</Typography>
             <Typography variant="h6">
               Total number of awards
@@ -189,7 +196,6 @@ export default function Achievements() {
                     color: 'inherit',
                     p: 3,
                     height: '100%',
-                    minWidth: '250px',
                   }}
                 >
                   <Box sx={{ opacity: '50%' }}>
