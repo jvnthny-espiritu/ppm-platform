@@ -10,6 +10,7 @@ import { List } from '@mui/icons-material';
 import { Forms } from '../../pages/Forms';
 import EnhancedTable from './PerformerDirectory';
 import { DashboardAdmin } from './DashboardAdmin';
+import { useNavigate } from "react-router-dom";
         
 const NAVIGATION = [
   {
@@ -71,30 +72,37 @@ function DashboardPageSwitcher({ pathname }) {
 }
 
 function DashboardLayoutAdmin() {
+  const navigate = useNavigate();
+  
+  const initialUserData = JSON.parse(localStorage.getItem('userData')) || {
+    name: '',
+    email: '',
+    image: '',
+  };
+  
   const [session, setSession] = React.useState({
-    user: {
-      name: 'Billymer Salamat',
-      email: 'billysalamat@gmail.com',
-      image: 'https://avatars.githubusercontent.com/u/19550456',
-    },
+    user: initialUserData
   });
 
   const authentication = React.useMemo(() => {
     return {
-      signIn: () => {
+      signIn: (userData) => {
         setSession({
           user: {
-            name: 'Billymer Salamat',
-            email: 'billysalamat@gmail.com',
-            image: 'https://avatars.githubusercontent.com/u/19550456',
+            name: userData.name,
+            email: userData.email,
+            image: userData.image || '',
           },
         });
+        localStorage.setItem('userData', JSON.stringify(userData));
       },
       signOut: () => {
         setSession(null);
+        localStorage.removeItem('authToken');
+        navigate('/sign-in');
       },
     };
-  }, []);
+  }, [navigate]);
 
   const [pathname, setPathname] = React.useState('/dashboard');
 

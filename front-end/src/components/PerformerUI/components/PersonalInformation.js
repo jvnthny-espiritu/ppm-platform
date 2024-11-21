@@ -51,7 +51,7 @@ export default function PersonalInformation() {
           id="first-name"
           name="first-name"
           type="name"
-          placeholder="Billy"
+          placeholder="Juan"
           required
           size="small"
         />
@@ -64,7 +64,7 @@ export default function PersonalInformation() {
           id="last-name"
           name="last-name"
           type="last-name"
-          placeholder="Salamat"
+          placeholder="Dela Cruz"
           required
           size="small"
         />

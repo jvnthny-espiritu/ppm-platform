@@ -185,7 +185,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="name"
-                  placeholder="Billymer Salamat"
+                  placeholder="Juan Dela Cruz"
                   error={nameError}
                   helperText={nameErrorMessage}
                   color={nameError ? 'error' : 'primary'}
