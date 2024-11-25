@@ -87,7 +87,8 @@ export default function SignUp() {
   const validateInputs = () => {
     const email = document.getElementById('email');
     const password = document.getElementById('password');
-    const name = document.getElementById('name');
+    const firstName = document.getElementById('firstName');
+    const lastName = document.getElementByID('lastName');
 
     let isValid = true;
 
@@ -109,7 +110,7 @@ export default function SignUp() {
       setPasswordErrorMessage('');
     }
 
-    if (!name.value || name.value.length < 1) {
+    if ((!firstName.value || !lastName.value) || (!firstName.value.length || !lastName.value.length < 1)) {
       setNameError(true);
       setNameErrorMessage('Name is required.');
       isValid = false;
@@ -127,7 +128,8 @@ export default function SignUp() {
     if (!validateInputs()) return;
   
     const data = {
-      name: document.getElementById('name').value,
+      firstName: document.getElementById('firstName').value,
+      lastName: document.getElementById('lastName').value,
       email: document.getElementById('email').value,
       password: document.getElementById('password').value,
     };
@@ -147,7 +149,8 @@ export default function SignUp() {
   
         // Store user data in localStorage
         localStorage.setItem('userData', JSON.stringify({
-          name: data.name,
+          firstName: data.firstName,
+          lastName: data.lastName,
           email: data.email,
         }));
   
@@ -187,14 +190,28 @@ export default function SignUp() {
               sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
             >
               <FormControl>
-                <FormLabel htmlFor="name">Full name</FormLabel>
+                <FormLabel htmlFor="firstName">First Name</FormLabel>
                 <TextField
-                  autoComplete="name"
-                  name="name"
+                  autoComplete="firstName"
+                  name="firstName"
                   required
                   fullWidth
-                  id="name"
-                  placeholder="Juan Dela Cruz"
+                  id="firstName"
+                  placeholder="Juan"
+                  error={nameError}
+                  helperText={nameErrorMessage}
+                  color={nameError ? 'error' : 'primary'}
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel htmlFor="lastName">Last Name</FormLabel>
+                <TextField
+                  autoComplete="lastName"
+                  name="lastName"
+                  required
+                  fullWidth
+                  id="lastName"
+                  placeholder="Dela Cruz"
                   error={nameError}
                   helperText={nameErrorMessage}
                   color={nameError ? 'error' : 'primary'}

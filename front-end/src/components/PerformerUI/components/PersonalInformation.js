@@ -10,6 +10,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { culturalgroups, campuses, departments, programs } from '../../../data/registrationValues';
 import { useState } from 'react';
 import { Divider, Typography } from '@mui/material';
+import axios from 'axios'; // Import Axios for API calls
 
 const FormGrid = styled(Grid)(() => ({
   display: 'flex',
@@ -19,147 +20,184 @@ const FormGrid = styled(Grid)(() => ({
 export default function PersonalInformation() {
   const [selectedDepartment, setSelectedDepartment] = useState(null);
   const [filteredPrograms, setFilteredPrograms] = useState([]);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    culturalGroup: '',
+    campus: '',
+    department: '',
+    program: '',
+    srCode: '',
+  });
 
   // Filter the programs based on the selected department
   const handleDepartmentChange = (event, value) => {
     setSelectedDepartment(value);
     if (value) {
-      setFilteredPrograms(programs[value.label] || []); // Assuming programs is an object keyed by department names
+      setFilteredPrograms(programs[value.label] || []);
+      setFormData({ ...formData, department: value.label });
     } else {
       setFilteredPrograms([]);
     }
   };
 
+  // Handle input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSave = async () => {
+    try {
+      const response = await axios.post('/save-profile', formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`, // Include the JWT token
+        },
+      });
+      alert(response.data.message || 'Profile saved successfully!');
+      console.log("Token:", localStorage.getItem('token'))
+    } catch (error) {
+      console.error('Error saving profile:', error.response?.data || error.message);
+      alert(error.response?.data.message || 'An error occurred while saving the profile.');
+    }
+  };
+
   return (
-    <Box
-    id="personal-info"
-    >
-    <Grid container spacing={3} padding={3}>
-      <FormGrid size={{ xs: 12, sm: 12, md: 12, lg: 12 }}>
-        <Typography>
-          <h1>Personal Information</h1>
-        </Typography>
-      </FormGrid>
-      <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
-        <FormLabel htmlFor="first-name" required>
-          First name
-        </FormLabel>
-        <OutlinedInput
-          id="first-name"
-          name="first-name"
-          type="name"
-          placeholder="Juan"
-          required
-          size="small"
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
-        <FormLabel htmlFor="last-name" required>
-          Last name
-        </FormLabel>
-        <OutlinedInput
-          id="last-name"
-          name="last-name"
-          type="last-name"
-          placeholder="Dela Cruz"
-          required
-          size="small"
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
-        <FormLabel htmlFor="email" required>
-          Email address
-        </FormLabel>
-        <OutlinedInput
-          id="email"
-          name="email"
-          type="email"
-          placeholder="20-12345@g.batstate-u.edu.ph"
-          required
-          size="small"
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
-        <FormLabel htmlFor="cgroup" required>
-          Cultural Group
-        </FormLabel>
-        <Autocomplete
-          id="cgroup"
-          name="cgroup"
-          type="cgroup"
-          required
-          size="small"
-          disablePortal
-          options={culturalgroups}
-          renderInput={(params) => <TextField {...params} />}
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6  }}>
-        <FormLabel htmlFor="cgroup" required>
-          Campus
-        </FormLabel>
-        <Autocomplete
-          id="campus"
-          name="campus"
-          type="campus"
-          required
-          size="small"
-          disablePortal
-          options={campuses}
-          renderInput={(params) => <TextField {...params} />}
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6  }}>
-        <FormLabel htmlFor="department" required>
-          Department
-        </FormLabel>
-        <Autocomplete
-          id="department"
-          name="department"
-          type="department"
-          required
-          size="small"
-          disablePortal
-          options={departments}
-          onChange={handleDepartmentChange}
-          renderInput={(params) => <TextField {...params} />}
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6  }}>
-        <FormLabel htmlFor="program" required>
-          Program
-        </FormLabel>
-        <Autocomplete
-          id="program"
-          name="program"
-          type="program"
-          required
-          size="small"
-          disablePortal
-          options={filteredPrograms} // Dynamically filtered programs
-          renderInput={(params) => <TextField {...params} />}
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6  }}>
-        <FormLabel htmlFor="srcode" required>
-          SR-Code
-        </FormLabel>
-        <OutlinedInput
-          id="srcode"
-          name="srcode"
-          type="srcode"
-          placeholder="20-12345"
-          required
-          size="small"
-        />
-      </FormGrid>
-    </Grid>
-    <Grid sx {...{pb:{xs: 3, sm: 3, md: 3, lg:  3}}} >
-      <Button variant="outlined" size="Medium">
-      Save
-      </Button>
-    </Grid>
-    <Divider/>
+    <Box id="personal-info">
+      <Grid container spacing={3} padding={3}>
+        <FormGrid size={{ xs: 12, sm: 12, md: 12, lg: 12 }}>
+          <Typography>
+            <h1>Personal Information</h1>
+          </Typography>
+        </FormGrid>
+        <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
+          <FormLabel htmlFor="first-name" required>
+            First name
+          </FormLabel>
+          <OutlinedInput
+            id="first-name"
+            name="firstName"
+            type="text"
+            placeholder="Juan"
+            required
+            size="small"
+            value={formData.firstName}
+            onChange={handleInputChange}
+          />
+        </FormGrid>
+        <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
+          <FormLabel htmlFor="last-name" required>
+            Last name
+          </FormLabel>
+          <OutlinedInput
+            id="last-name"
+            name="lastName"
+            type="text"
+            placeholder="Dela Cruz"
+            required
+            size="small"
+            value={formData.lastName}
+            onChange={handleInputChange}
+          />
+        </FormGrid>
+        <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
+          <FormLabel htmlFor="email" required>
+            Email address
+          </FormLabel>
+          <OutlinedInput
+            id="email"
+            name="email"
+            type="email"
+            placeholder="20-12345@g.batstate-u.edu.ph"
+            required
+            size="small"
+            value={formData.email}
+            onChange={handleInputChange}
+          />
+        </FormGrid>
+        <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
+          <FormLabel htmlFor="cgroup" required>
+            Cultural Group
+          </FormLabel>
+          <Autocomplete
+            id="cgroup"
+            name="culturalGroup"
+            required
+            size="small"
+            disablePortal
+            options={culturalgroups}
+            onChange={(event, value) => setFormData({ ...formData, culturalGroup: value })}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </FormGrid>
+        <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
+          <FormLabel htmlFor="campus" required>
+            Campus
+          </FormLabel>
+          <Autocomplete
+            id="campus"
+            name="campus"
+            required
+            size="small"
+            disablePortal
+            options={campuses}
+            onChange={(event, value) => setFormData({ ...formData, campus: value })}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </FormGrid>
+        <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
+          <FormLabel htmlFor="department" required>
+            Department
+          </FormLabel>
+          <Autocomplete
+            id="department"
+            name="department"
+            required
+            size="small"
+            disablePortal
+            options={departments}
+            onChange={handleDepartmentChange}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </FormGrid>
+        <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
+          <FormLabel htmlFor="program" required>
+            Program
+          </FormLabel>
+          <Autocomplete
+            id="program"
+            name="program"
+            required
+            size="small"
+            disablePortal
+            options={filteredPrograms}
+            onChange={(event, value) => setFormData({ ...formData, program: value })}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </FormGrid>
+        <FormGrid size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
+          <FormLabel htmlFor="srcode" required>
+            SR-Code
+          </FormLabel>
+          <OutlinedInput
+            id="srcode"
+            name="srCode"
+            type="text"
+            placeholder="20-12345"
+            required
+            size="small"
+            value={formData.srCode}
+            onChange={handleInputChange}
+          />
+        </FormGrid>
+      </Grid>
+      <Grid sx={{ pb: { xs: 3, sm: 3, md: 3, lg: 3 } }}>
+        <Button variant="outlined" size="medium" onClick={handleSave}>
+          Save
+        </Button>
+      </Grid>
+      <Divider />
     </Box>
   );
 }
