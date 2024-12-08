@@ -5,12 +5,17 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const authRoutes = require('../backend/routes/auth')
 
+
 const app = express()
 app.use(cors());
 app.use(express.json());
 
 // ROUTES
 app.use('/api', authRoutes)
+
+const profileRoutes = require('../backend/models/Profile'); // Assuming the new route is in routes folder
+app.use('/api', profileRoutes);
+
 
 // REQUESTS
 const PORT = process.env.PORT;
