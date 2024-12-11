@@ -20,23 +20,38 @@ import {
   programs,
 } from "../../data/registrationValues.js";
 
+// Styled components for consistent UI styling
 const StyledCard = styled(Card)(({ theme }) => ({
-  backgroundColor: "#AF1740",
   padding: theme.spacing(3),
   marginBottom: theme.spacing(4),
 }));
 
 const ProfileHeader = styled("div")(({ theme }) => ({
-  backgroundColor: "#AF1740",
+  backgroundColor: "#3f51b5",
   padding: theme.spacing(4),
   textAlign: "center",
   color: "#fff",
 }));
 
+const DisplayField = styled("div")(({ theme }) => ({
+  fontSize: theme.typography.body1.fontSize,
+  padding: theme.spacing(1, 0),
+  backgroundColor: "#f4f4f4",
+  borderRadius: theme.shape.borderRadius,
+  textAlign: "left",
+  paddingLeft: theme.spacing(2),
+  color: "#333", // Ensure font color is visible
+}));
+
 export default function PerformerProfile() {
+  // State to toggle edit mode
   const [editable, setEditable] = useState(false);
+
+  // States for dropdowns and user data
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [selectedProgram, setSelectedProgram] = useState("");
+
+  // State to hold saved user data (non-editable mode)
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",
@@ -49,17 +64,27 @@ export default function PerformerProfile() {
     srCode: "",
   });
 
-  // Fetch performer profile data from backend
+  // State to hold editable data (temporary changes during edit mode)
+  const [editableUserData, setEditableUserData] = useState({ ...userData });
+
+  // State for achievements
+  const [achievements, setAchievements] = useState([]); // List of achievements
+  const [editableAchievements, setEditableAchievements] = useState([]); // Editable version of achievements
+
+  // Fetch user profile data from backend
   const fetchProfile = async () => {
     try {
       const email = "user@example.com"; // Replace with the logged-in user's email
       const response = await fetch(`http://localhost:4000/api/profile?email=${email}`);
-  
+
       if (response.ok) {
         const data = await response.json();
-        setUserData(data);
-        setSelectedDepartment(data.department);
+        setUserData(data); // Set the saved data
+        setEditableUserData(data); // Sync editable data
+        setSelectedDepartment(data.department); // Update dependent dropdowns
         setSelectedProgram(data.program);
+        setAchievements(data.achievements || []); // Load achievements
+        setEditableAchievements(data.achievements || []);
       } else {
         console.error("Failed to fetch profile");
       }
@@ -76,11 +101,13 @@ export default function PerformerProfile() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(userData), // Send the entire userData object
+        body: JSON.stringify({ ...editableUserData, achievements: editableAchievements }),
       });
-  
+
       if (response.ok) {
         const data = await response.json();
+        setUserData(data); // Update displayed data with the response
+        setAchievements(data.achievements || []); // Update achievements
         setEditable(false); // Exit edit mode
         console.log("Profile updated:", data);
       } else {
@@ -91,16 +118,140 @@ export default function PerformerProfile() {
     }
   };
 
+  // Handle changes in form inputs
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUserData((prevData) => ({
+    setEditableUserData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
 
+  // Handle changes in achievements
+  const handleAchievementChange = (index, field, value) => {
+    const updatedAchievements = [...editableAchievements];
+    updatedAchievements[index][field] = value;
+    setEditableAchievements(updatedAchievements);
+  };
+
+  // Add a new achievement
+  const addAchievement = () => {
+    setEditableAchievements([...
+      editableAchievements,
+      { awardName: "", eventName: "", date: "" },
+    ]);
+  };
+
+  // Fetch user profile data on component mount
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
+  // Helper function to render individual form fields
+  const renderField = (label, name, options = null) => (
+    <Grid item xs={12} sm={6}>
+      <Typography variant="subtitle2">{label}</Typography>
+      {editable ? (
+        options ? (
+          <FormControl fullWidth>
+            <InputLabel>{label}</InputLabel>
+            <Select
+              name={name}
+              value={editableUserData[name]}
+              onChange={handleInputChange}
+            >
+              {options.map((option, index) => (
+                <MenuItem key={index} value={option.label}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        ) : (
+          <TextField
+            fullWidth
+            variant="outlined"
+            name={name}
+            value={editableUserData[name]}
+            onChange={handleInputChange}
+          />
+        )
+      ) : (
+        <DisplayField>{userData[name] || "N/A"}</DisplayField>
+      )}
+    </Grid>
+  );
+
+  // Render achievements section
+  const renderAchievements = () => (
+    <StyledCard>
+      <Typography variant="h6">Achievements</Typography>
+      <Divider sx={{ my: 2 }} />
+      {editable ? (
+        <>
+          {editableAchievements.map((achievement, index) => (
+            <Grid container spacing={2} key={index}>
+              <Grid item xs={12} sm={4}>
+                <TextField
+                  label="Award Name"
+                  fullWidth
+                  value={achievement.awardName}
+                  onChange={(e) =>
+                    handleAchievementChange(index, "awardName", e.target.value)
+                  }
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <TextField
+                  label="Event Name"
+                  fullWidth
+                  value={achievement.eventName}
+                  onChange={(e) =>
+                    handleAchievementChange(index, "eventName", e.target.value)
+                  }
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <TextField
+                  label="Date"
+                  type="date"
+                  fullWidth
+                  InputLabelProps={{ shrink: true }}
+                  value={achievement.date}
+                  onChange={(e) =>
+                    handleAchievementChange(index, "date", e.target.value)
+                  }
+                />
+              </Grid>
+            </Grid>
+          ))}
+          <Button
+            variant="outlined"
+            sx={{ marginTop: 2 }}
+            onClick={addAchievement}
+          >
+            Add Achievement
+          </Button>
+        </>
+      ) : (
+        achievements.length > 0 ? (
+          achievements.map((achievement, index) => (
+            <DisplayField key={index}>
+              <strong>Award Name:</strong> {achievement.awardName || "N/A"} <br />
+              <strong>Event Name:</strong> {achievement.eventName || "N/A"} <br />
+              <strong>Date:</strong> {achievement.date || "N/A"}
+            </DisplayField>
+          ))
+        ) : (
+          <Typography>No achievements added yet.</Typography>
+        )
+      )}
+    </StyledCard>
+  );
+
   return (
     <Grid container spacing={3} padding={3}>
+      {/* Profile Header */}
       <Grid item xs={12}>
         <ProfileHeader>
           <Avatar
@@ -112,174 +263,61 @@ export default function PerformerProfile() {
             }}
             src={userData.image || "/path-to-placeholder-image.jpg"}
           />
-          <Typography variant="h5" sx={{ marginTop: 10 }}>
+          <Typography variant="h5" sx={{ marginTop: 2 }}>
             {userData.firstName || ""} {userData.lastName || ""}
           </Typography>
           <Button
             variant="outlined"
-            sx={{ marginTop: 5 }}
-            onClick={() => setEditable(!editable)}
+            sx={{ marginTop: 2 }}
+            onClick={() => {
+              if (editable) setEditableUserData(userData); // Revert changes if canceled
+              setEditable(!editable);
+            }}
           >
             {editable ? "Cancel" : "Edit Profile"}
           </Button>
         </ProfileHeader>
       </Grid>
 
+      {/* Profile Details */}
       <Grid item xs={12}>
         <StyledCard>
-          <Typography variant="h6">Update Your Details</Typography>
+          <Typography variant="h6">Profile Details</Typography>
           <Divider sx={{ my: 2 }} />
-          <form>
-            <Grid container spacing={2}>
-              {/* First Name */}
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="First Name"
-                  variant="outlined"
-                  fullWidth
-                  name="firstName"
-                  value={userData.firstName}
-                  onChange={handleInputChange}
-                  disabled={!editable}
-                />
-              </Grid>
+          <Grid container spacing={2}>
+            {renderField("First Name", "firstName")}
+            {renderField("Last Name", "lastName")}
+            {renderField("Email Address", "email")}
+            {renderField("SR Code", "srCode")}
+            {renderField("Cultural Group", "culturalGroup", culturalgroups)}
+            {renderField("Campus", "campus", campuses)}
+            {renderField("Department", "department", departments)}
+            {renderField("Program", "program", programs[selectedDepartment] || [])}
+          </Grid>
 
-              {/* Last Name */}
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Last Name"
-                  variant="outlined"
-                  fullWidth
-                  name="lastName"
-                  value={userData.lastName}
-                  onChange={handleInputChange}
-                  disabled={!editable}
-                />
-              </Grid>
-
-              {/* Email */}
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Email Address"
-                  variant="outlined"
-                  fullWidth
-                  name="email"
-                  value={userData.email}
-                  onChange={handleInputChange}
-                  disabled={!editable}
-                />
-              </Grid>
-
-              {/* SR Code */}
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="SR-Code"
-                  variant="outlined"
-                  fullWidth
-                  name="srCode"
-                  value={userData.srCode}
-                  onChange={handleInputChange}
-                  disabled={!editable}
-                />
-              </Grid>
-
-              {/* Cultural Group */}
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth disabled={!editable}>
-                  <InputLabel>Cultural Group</InputLabel>
-                  <Select
-                    name="culturalGroup"
-                    value={userData.culturalGroup}
-                    onChange={handleInputChange}
-                  >
-                    {culturalgroups.map((group, index) => (
-                      <MenuItem key={index} value={group.label}>
-                        {group.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-
-              {/* Campus */}
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth disabled={!editable}>
-                  <InputLabel>Campus</InputLabel>
-                  <Select
-                    name="campus"
-                    value={userData.campus}
-                    onChange={handleInputChange}
-                  >
-                    {campuses.map((campus, index) => (
-                      <MenuItem key={index} value={campus.label}>
-                        {campus.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-
-              {/* Department */}
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth disabled={!editable}>
-                  <InputLabel>Department</InputLabel>
-                  <Select
-                    name="department"
-                    value={selectedDepartment}
-                    onChange={(e) => {
-                      setSelectedDepartment(e.target.value);
-                      setSelectedProgram("");
-                      handleInputChange(e);
-                    }}
-                  >
-                    {departments.map((department, index) => (
-                      <MenuItem key={index} value={department.label}>
-                        {department.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-
-              {/* Program */}
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth disabled={!editable || !selectedDepartment}>
-                  <InputLabel>Program</InputLabel>
-                  <Select
-                    name="program"
-                    value={selectedProgram}
-                    onChange={(e) => {
-                      setSelectedProgram(e.target.value);
-                      setUserData((prevData) => ({
-                        ...prevData,
-                        program: e.target.value,
-                      }));
-                    }}
-                  >
-                    {programs[selectedDepartment]?.map((program, index) => (
-                      <MenuItem key={index} value={program.label}>
-                        {program.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-            </Grid>
-
-            {editable && (
-              <Button
-                type="button"
-                variant="contained"
-                color="primary"
-                sx={{ marginTop: 3 }}
-                onClick={saveProfile}
-              >
-                Save
-              </Button>
-            )}
-          </form>
+         
         </StyledCard>
       </Grid>
+
+      {/* Achievements Section */}
+      <Grid item xs={12}>
+        {renderAchievements()}
+
+      </Grid>
+
+      {/* Save Button */}
+{editable && (
+  <Grid item xs={12} container justifyContent="center" alignItems="center">
+    <Button
+      variant="contained"
+      color="primary"
+      sx={{ marginTop: 3 }}
+      onClick={saveProfile}
+    >
+      Save
+    </Button>
+  </Grid>
+)}
     </Grid>
   );
 }
