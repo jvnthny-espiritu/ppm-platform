@@ -3,9 +3,6 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-// Logo import (if using a file in the public folder)
-const logoSrc = '/assets/images/office_logo.png'; // Adjust path based on your setup
-
 const items = [
   {
     title: 'Office of The Culture and Arts',
