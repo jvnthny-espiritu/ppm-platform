@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Grid,
   Typography,
@@ -18,7 +18,9 @@ import {
   campuses,
   departments,
   programs,
+  fetchRegistrationValues,
 } from "../../data/registrationValues.js";
+import { UserContext } from "../../_context/UserContext";
 
 // Styled components for consistent UI styling
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -274,8 +276,32 @@ export default function PerformerProfile() {
               setEditable(!editable);
             }}
           >
-            {editable ? "Cancel" : "Edit Profile"}
+            Add Achievement
           </Button>
+        </>
+      ) : (
+        achievements.length > 0 ? (
+          achievements.map((achievement, index) => (
+            <DisplayField key={index}>
+              <strong>Award Name:</strong> {achievement.awardName || "N/A"} <br />
+              <strong>Event Name:</strong> {achievement.eventName || "N/A"} <br />
+              <strong>Date:</strong> {achievement.date || "N/A"}
+            </DisplayField>
+          ))
+        ) : (
+          <Typography>No achievements added yet.</Typography>
+        )
+      )}
+    </StyledCard>
+  );
+
+  return (
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
+        <ProfileHeader>
+          <Avatar alt={user?.firstName} src={user?.image} />
+          <Typography variant="h4">{`${user?.firstName} ${user?.lastName}`}</Typography>
+          <Typography variant="subtitle1">{user?.email}</Typography>
         </ProfileHeader>
       </Grid>
 

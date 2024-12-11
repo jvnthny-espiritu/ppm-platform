@@ -13,6 +13,7 @@ import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import getSignUpTheme from './theme/getSignUpTheme';
 import TemplateFrame from './TemplateFrame';
 import { useNavigate } from 'react-router-dom'; // Added for routing
+import api from '../../_config/api';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -88,10 +89,10 @@ export default function SignUp() {
     const email = document.getElementById('email');
     const password = document.getElementById('password');
     const firstName = document.getElementById('firstName');
-    const lastName = document.getElementByID('lastName');
-
+    const lastName = document.getElementById('lastName');
+  
     let isValid = true;
-
+  
     if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
       setEmailError(true);
       setEmailErrorMessage('Please enter a valid email address.');
@@ -100,7 +101,7 @@ export default function SignUp() {
       setEmailError(false);
       setEmailErrorMessage('');
     }
-
+  
     if (!password.value || password.value.length < 6) {
       setPasswordError(true);
       setPasswordErrorMessage('Password must be at least 6 characters long.');
@@ -109,8 +110,8 @@ export default function SignUp() {
       setPasswordError(false);
       setPasswordErrorMessage('');
     }
-
-    if ((!firstName.value || !lastName.value) || (!firstName.value.length || !lastName.value.length < 1)) {
+  
+    if (!firstName.value || !lastName.value || firstName.value.length < 1 || lastName.value.length < 1) {
       setNameError(true);
       setNameErrorMessage('Name is required.');
       isValid = false;
@@ -118,46 +119,35 @@ export default function SignUp() {
       setNameError(false);
       setNameErrorMessage('');
     }
-
+  
     return isValid;
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
     if (!validateInputs()) return;
-  
     const data = {
       firstName: document.getElementById('firstName').value,
       lastName: document.getElementById('lastName').value,
       email: document.getElementById('email').value,
       password: document.getElementById('password').value,
     };
-  
     try {
-      const response = await fetch('http://localhost:4000/api/sign-up', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-  
-      if (response.ok) {
-        const result = await response.json();
+      const response = await api.post('/sign-up', data);
+      if (response.status === 201) {
+        const result = response.data;
         console.log('User created successfully:', result);
-  
+
         // Store user data in localStorage
         localStorage.setItem('userData', JSON.stringify({
           firstName: data.firstName,
           lastName: data.lastName,
           email: data.email,
         }));
-  
+
         navigate('/sign-in'); // Redirect to login page on successful signup
       } else {
-        const error = await response.json();
-        console.error('Error creating user:', error.message);
+        console.error('Error creating user:', response.data.message);
       }
     } catch (error) {
       console.error('Error:', error);
